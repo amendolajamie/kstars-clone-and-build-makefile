@@ -1,3 +1,4 @@
+
 all:
 	@echo "All does nothing"
 	@echo "----------------"
@@ -67,7 +68,7 @@ getmaster: /usr/local/build clone
 ####################### Stellasolver ########################
 /usr/local/build/stellarsolver:
 	@echo "make dir"
-	mkdir /usr/local/build/stellarsolver
+	mkdir -p /usr/local/build/stellarsolver
 
 /usr/local/build/stellarsolver/configured: /usr/local/build/stellarsolver
 	@echo "configure"
@@ -85,7 +86,7 @@ rebuildstellarsolver: /usr/local/build/stellarsolver/configured
 ####################### PHD2 ########################
 /usr/local/build/phd2:
 	@echo "make dir"
-	mkdir /usr/local/build/phd2
+	mkdir -p /usr/local/build/phd2
 
 /usr/local/build/phd2/configured: /usr/local/build/phd2
 	@echo "configure"
@@ -103,7 +104,7 @@ rebuildphd2: /usr/local/build/phd2/configured
 ####################### KStars ########################
 /usr/local/build/kstars:
 	@echo "make dir"
-	mkdir /usr/local/build/kstars
+	mkdir -p /usr/local/build/kstars
 
 /usr/local/build/kstars/configured: /usr/local/build/kstars
 	@echo "configure"
@@ -121,16 +122,16 @@ rebuildkstars: /usr/local/build/kstars/configured
 ####################### Indi ########################
 /usr/local/build/indi:
 	@echo "make dir"
-	mkdir /usr/local/build/indi
+	mkdir -p /usr/local/build/indi
 
-/usr/local/build/indi-3rdparty:
+/usr/local/build/indi-3rdparty: /usr/local/build/indi
 	@echo "make dir"
-	mkdir /usr/local/build/indi-3rdparty
-	mkdir /usr/local/build/indi-3rdparty/libasi
-	mkdir /usr/local/build/indi-3rdparty/indi-asi
-	mkdir /usr/local/build/indi-3rdparty/indi-gphoto
-	mkdir /usr/local/build/indi-3rdparty/indi-eqmod
-	mkdir /usr/local/build/indi-3rdparty/indi-gpsd
+	mkdir -p /usr/local/build/indi-3rdparty
+	mkdir -p /usr/local/build/indi-3rdparty/libasi
+	mkdir -p /usr/local/build/indi-3rdparty/indi-asi
+	mkdir -p /usr/local/build/indi-3rdparty/indi-gphoto
+	mkdir -p /usr/local/build/indi-3rdparty/indi-eqmod
+	mkdir -p /usr/local/build/indi-3rdparty/indi-gpsd
 
 /usr/local/build/indi/configured: /usr/local/build/indi
 	@echo "configure"
@@ -140,7 +141,7 @@ rebuildkstars: /usr/local/build/kstars/configured
 	@echo "configure"
 	cd /usr/local/build/indi-3rdparty; cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release ../../indi-3rdparty; touch /usr/local/build/indi-3rdparty/configured
 
-buildindi: /usr/local/build/indi/configured /usr/local/build/indi-3rdparty/configured 
+buildindi: /usr/local/build/indi-3rdparty/configured /usr/local/build/indi/configured  
 	@echo "build"
 	cd /usr/local/build/indi; make ; sudo make install; touch /usr/local/build/indi/configured
 	cd /usr/local/build/indi-3rdparty; make ; sudo make install; touch /usr/local/build/indi-3rdparty/configured
